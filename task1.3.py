@@ -3,7 +3,7 @@ from re import VERBOSE
 from scapy.all import *
 
 ip_obj = IP()
-ip_obj.dst = '10.9.0.5'
+ip_obj.dst = '8.8.8.8'
 icmp_obj = ICMP()
 
 
@@ -20,7 +20,7 @@ while not recieved:
         print(f"{ttl_count} request timed out")
         ttl_count += 1
         continue
-    
+    print(f"hop: {ttl_count} , src: {ans.src}")
     if ans.src == ip_obj.dst:
         print(f"We arrived to our destination in {ttl_count} hops")
         recieved = True
