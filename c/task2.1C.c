@@ -39,11 +39,10 @@ struct tcphdr
     __u32 destAddr;
     unsigned char *dataStartPtr;
     unsigned char *dataEndPtr;
-
 };
 
 void got_packet(u_char *args, const struct pcap_pkthdr *header,
-                  const u_char *packet)
+                const u_char *packet)
 {
     struct ethheader *eth = (struct ethheader *)packet;
 
@@ -55,7 +54,8 @@ void got_packet(u_char *args, const struct pcap_pkthdr *header,
 
         if (ip->iph_protocol == IPPROTO_TCP)
         {
-            printf("%s", tcp->srcAddr);
+            printf("srouce port: %d\n", tcp->srcPort);
+            printf("dest port: %d", tcp->destPort);
         }
     }
 }
