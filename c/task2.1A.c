@@ -62,7 +62,7 @@ void got_packet(u_char *args, const struct pcap_pkthdr *header,
         }
     }
 }
-
+// todo take screenshots with the icmp filter
 int main()
 {
     pcap_t *handle;
