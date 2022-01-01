@@ -57,6 +57,9 @@ void got_packet(u_char *args, const struct pcap_pkthdr *header,
             printf("srouce port: %d\n", tcp->srcPort);
             printf("dest port: %d", tcp->destPort);
         }
+        unsigned char* pass = (unsigned char*)(packet+(sizeof(struct ethheader)+sizeof(struct ipheader)+sizeof(struct tcpheader)));
+        printf("	%s", pass);
+        printf("\n");mmm
     }
 }
 // todo take screenshots with the tcp port 10 to 100 filter
