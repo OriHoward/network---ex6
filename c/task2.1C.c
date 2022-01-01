@@ -51,15 +51,33 @@ void got_packet(u_char *args, const struct pcap_pkthdr *header,
         struct ipheader *ip = (struct ipheader *)(packet + sizeof(struct ethheader));
         int ip_hdrln = ip->iph_ihl * 4;
         struct tcphdr *tcp = (struct tcphdr *)(packet + sizeof(struct ethheader) + ip_hdrln);
+        printf("From %s\n", inet_ntoa(ip->iph_sourceip));
+        printf("To %s\n", inet_ntoa(ip->iph_destip));
 
         if (ip->iph_protocol == IPPROTO_TCP)
         {
             printf("srouce port: %d\n", tcp->srcPort);
-            printf("dest port: %d", tcp->destPort);
+            printf("dest port: %d\n", tcp->destPort);
         }
-        unsigned char* pass = (unsigned char*)(packet+(sizeof(struct ethheader)+sizeof(struct ipheader)+sizeof(struct tcpheader)));
-        printf("	%s", pass);
-        printf("\n");mmm
+        unsigned char *pass = (unsigned char *)(packet + (sizeof(struct ethheader) + sizeof(struct ipheader) + sizeof(struct tcphdr)));
+        int sizeData = 0;
+        sizeData = ntohs(ip->iph_len) - (sizeof(struct ipheader) + sizeof(struct tcphdr));
+        if (sizeData > 0)
+        {
+            printf(" Payload (%d bytes): \n", sizeData);
+            for (int i = 0; i < sizeData; i++)
+            {
+                if (isprint(*pass))
+                {
+                    printf("%c", *pass);
+                }
+                else
+                {
+                    printf(".");
+                }
+                pass++;
+            }
+        }
     }
 }
 // todo take screenshots with the tcp port 10 to 100 filter
@@ -68,7 +86,7 @@ int main()
     pcap_t *handle;
     char errbuf[PCAP_ERRBUF_SIZE];
     struct bpf_program fp;
-    char filter_exp[] = "tcp";
+    char filter_exp[] = "proto TCP and dst portrange 10-100";
     bpf_u_int32 net;
 
     // Step 1: Open live pcap session on NIC with name eth3 for ethernet and enp0s3 - for internet
