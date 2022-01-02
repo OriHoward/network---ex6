@@ -72,7 +72,7 @@ int main()
     bpf_u_int32 net;
 
     // Step 1: Open live pcap session on NIC with name eth3 for ethernet and enp0s3 - for internet
-    handle = pcap_open_live("enp0s3", BUFSIZ, 1, 1000, errbuf);
+    handle = pcap_open_live("br-3d50edc4535c", BUFSIZ, 1, 1000, errbuf);
     if (handle == NULL)
     {
         printf("can not open live pcap session, err\n you should run as admin: %s\n", errbuf);

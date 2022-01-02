@@ -24,7 +24,7 @@ def spoofing(pkt):
 
     print("spoofed packet sent")
 
-#todo run all the 3 scenarios with wireshark (capture and save) and explain each one of them in pdf  
+
 
 list_of_sniffing = ['br-3d50edc4535c','enp0s3']
 pkt = sniff(iface = list_of_sniffing,filter = 'icmp',prn = spoofing)
