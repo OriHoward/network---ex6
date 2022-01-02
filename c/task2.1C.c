@@ -45,7 +45,6 @@ void got_packet(u_char *args, const struct pcap_pkthdr *header,
                 const u_char *packet)
 {
     struct ethheader *eth = (struct ethheader *)packet;
-
     if (ntohs(eth->ether_type) == 0x0800)
     { // 0x0800 is IP type
         struct ipheader *ip = (struct ipheader *)(packet + sizeof(struct ethheader));
@@ -69,13 +68,14 @@ void got_packet(u_char *args, const struct pcap_pkthdr *header,
             {
                 if (isprint(*pass))
                 {
-                    printf("%c", *pass);
+                    printf("data = %c\n", pass[i]);
+        
                 }
                 else
                 {
                     printf(".");
                 }
-                pass++;
+            
             }
         }
     }
@@ -90,7 +90,7 @@ int main()
     bpf_u_int32 net;
 
     // Step 1: Open live pcap session on NIC with name eth3 for ethernet and enp0s3 - for internet
-    handle = pcap_open_live("enp0s3", BUFSIZ, 1, 1000, errbuf);
+    handle = pcap_open_live("br-3d50edc4535c", BUFSIZ, 1, 1000, errbuf);
     if (handle == NULL)
     {
         printf("can not open live pcap session, err\n you should run as admin: %s\n", errbuf);

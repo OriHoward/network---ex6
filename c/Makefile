@@ -2,7 +2,7 @@
 CC = gcc
 FLAGS = -Wall -g
 
-all: taskA taskB taskC
+all: taskA taskB taskC taskD
 
 taskA: task2.1A.o
 	$(CC) $(FLAGS) -o taskA task2.1A.o -lpcap
@@ -13,6 +13,8 @@ taskB: task2.1B.o
 taskC: task2.1C.o
 	$(CC) $(FLAGS) -o taskC task2.1C.o -lpcap
 
+taskD: task2.2A.o
+	$(CC) $(FLAGS) -o taskD task2.2A.o -lpcap
 
 task2.1A.o: task2.1A.c 
 	$(CC) $(FLAGS) -c task2.1A.c
@@ -25,6 +27,9 @@ task2.1B.o: task2.1B.c
 task2.1C.o: task2.1C.c 
 	$(CC) $(FLAGS) -c task2.1C.c
 
+task2.2A.o: task2.2A.c 
+	$(CC) $(FLAGS) -c task2.2A.c
+
 clean:
-	rm -f *.o *.a taskA taskB taskC
+	rm -f *.o *.a taskA taskB taskC taskD
 
