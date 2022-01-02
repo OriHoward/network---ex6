@@ -48,6 +48,7 @@ void spoofNewPkt(struct ipheader *ip)
     setsockopt(sock, IPPROTO_IP, IP_HDRINCL, &enable, sizeof(enable));
 
     sendto(sock, ip, ntohs(ip->iph_len), 0, (struct sockaddr *)&sin, sizeof(sin));
+    printf("test");
     close(sock);
 }
 
@@ -64,6 +65,8 @@ void got_packet(u_char *args, const struct pcap_pkthdr *header,
 
         if (ip->iph_protocol == IPPROTO_ICMP)
         {
+            printf("From: %s\n", inet_ntoa(ip->iph_sourceip));
+            printf("To: %s\n", inet_ntoa(ip->iph_destip));
             int pktLen = 1024;
             const char data[pktLen];
             memset((char *)data, 0, pktLen);
@@ -91,7 +94,7 @@ int main()
     bpf_u_int32 net;
 
     // Step 1: Open live pcap session on NIC with name eth3 for ethernet and enp0s3 - for internet
-    handle = pcap_open_live("enp0s3", BUFSIZ, 1, 1000, errbuf);
+    handle = pcap_open_live("br-3d50edc4535c", BUFSIZ, 1, 1000, errbuf);
     if (handle == NULL)
     {
         printf("can not open live pcap session, err\n you should run as admin: %s\n", errbuf);

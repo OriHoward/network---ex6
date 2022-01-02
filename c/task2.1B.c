@@ -62,7 +62,6 @@ void got_packet(u_char *args, const struct pcap_pkthdr *header,
         }
     }
 }
-// todo take screenshots with the tcp port 10 to 100 filter
 int main()
 {
     pcap_t *handle;
