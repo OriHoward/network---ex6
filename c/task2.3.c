@@ -48,7 +48,6 @@ void spoofNewPkt(struct ipheader *ip)
     setsockopt(sock, IPPROTO_IP, IP_HDRINCL, &enable, sizeof(enable));
 
     sendto(sock, ip, ntohs(ip->iph_len), 0, (struct sockaddr *)&sin, sizeof(sin));
-    printf("test");
     close(sock);
 }
 
